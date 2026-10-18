@@ -1,0 +1,481 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#203c32" />
+    <title>Elementlings · Physics lab</title>
+    <link rel="icon" href="data:," />
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body>
+    <header class="masthead">
+      <a href="./" class="brand"
+        ><span class="brand-icon">e</span> elementlings<span class="lab-label"
+          >FIELD LAB / 02</span
+        ></a
+      ><span class="experiment-tag">EXPERIMENTAL BUILD</span>
+    </header>
+    <main>
+      <div class="intro">
+        <div>
+          <p class="eyebrow">A LITTLE HEAT. A CHAIN REACTION.</p>
+          <h1>Let curiosity take flight.</h1>
+          <p class="lede">
+            Aim a Fire Beetle at the rope. Watch the world do the rest.
+          </p>
+        </div>
+        <p class="scope">
+          Standalone physics experiment<br />
+          Not integrated with the Unity game.
+        </p>
+      </div>
+      <div class="workspace">
+        <section class="scene-panel" aria-label="Physics experiment">
+          <div class="scene-toolbar">
+            <label class="preset-label"
+              >EXPERIMENT
+              <select id="preset">
+                <option value="rope">P02 · Rope & cable</option>
+                <option value="trajectory">P01 · Trajectory</option>
+                <option value="thermal">P03 · Heat bridge & boiler</option>
+                <option value="water-boiler">P04 · Water & empty boiler</option>
+                <option value="clay-bridge">P10 · The Clay Bridge</option>
+                <option value="overflow">P09 · The Overflow</option>
+                <option value="last-connection">
+                  P08 · The Last Connection
+                </option>
+                <option value="broken-circuit">P07 · The Broken Circuit</option>
+                <option value="first-puzzle">P06 · Warm Crossing</option>
+                <option value="free-water">P05 · World water & runoff</option>
+              </select></label
+            ><span id="run-state" class="live-state">● RUNNING</span>
+          </div>
+          <div class="canvas-wrap">
+            <canvas
+              id="scene"
+              width="1200"
+              height="600"
+              tabindex="0"
+              aria-label="Fixed cannon physics scene. Adjust angle and launch speed, then fire. Tap the scene to aim."
+            ></canvas>
+            <div class="scene-note">
+              FIXED CANNON <span>→</span> PHYSICAL CAUSE & EFFECT
+            </div>
+          </div>
+          <section
+            id="clay-controls"
+            class="thermal-readout"
+            hidden
+            aria-label="Clay Bridge mixer and physical mechanisms"
+          >
+            <div class="aim-buttons">
+              <label
+                >INGREDIENT A<select id="clay-a">
+                  <option>Earth</option>
+                  <option>Drop</option>
+                  <option>Spark</option>
+                  <option>Biomass</option>
+                </select></label
+              >
+              <label
+                >INGREDIENT B<select id="clay-b">
+                  <option>Earth</option>
+                  <option>Drop</option>
+                  <option>Spark</option>
+                  <option>Biomass</option>
+                </select></label
+              >
+              <button id="clay-fire">Launch Mud</button>
+            </div>
+            <p id="clay-stock"></p>
+            <p id="clay-recipe"></p>
+            <label
+              >Aim <output id="clay-angle-value">38°</output
+              ><input
+                id="clay-angle"
+                type="range"
+                min="5"
+                max="85"
+                step="1"
+                value="38"
+            /></label>
+            <p id="clay-state" role="status"></p>
+            <p id="clay-status" role="status"></p>
+            <details>
+              <summary>Recipes and clues</summary>
+              <p>
+                Earth + Drop → Mud. Spark + Biomass → Fire. Earth + Earth →
+                Stone. Sticky paste can fill a rough opening, but a heavy ball
+                can deform it. Heat changes the material; a real impact can lift
+                the retaining stop. Try Mud around38°, Fire around37° onto the
+                placed material, and Stone around51° at the lifting paddle. Wait
+                for visible ceramic before releasing the heavy ball. No
+                shot-order lock.
+              </p>
+            </details>
+          </section>
+          <section
+            id="overflow-controls"
+            class="thermal-readout"
+            hidden
+            aria-label="Overflow mixer and physical load"
+          >
+            <div class="aim-buttons">
+              <label
+                >INGREDIENT A<select id="overflow-a">
+                  <option>Earth</option>
+                  <option>Drop</option>
+                </select></label
+              >
+              <label
+                >INGREDIENT B<select id="overflow-b">
+                  <option>Earth</option>
+                  <option>Drop</option>
+                </select></label
+              >
+              <button id="overflow-fire">Launch Stone</button>
+            </div>
+            <p id="overflow-stock"></p>
+            <p id="overflow-recipe"></p>
+            <label
+              >Aim <output id="overflow-angle-value">75°</output
+              ><input
+                id="overflow-angle"
+                type="range"
+                min="5"
+                max="85"
+                step="1"
+                value="75"
+            /></label>
+            <p id="overflow-state" role="status"></p>
+            <p id="overflow-status" role="status"></p>
+            <details>
+              <summary>Recipes and clues</summary>
+              <p>
+                Earth + Earth → Stone. Drop + Drop → Water. Earth + Drop → Mud.
+                Stone occupies space in the cistern; water adds a finite dose.
+                Mud is a real water/sediment mixture: concentrated slurry can
+                stop on a gentle slope. The protected bucket must physically
+                gain enough load to lower the bridge. Try the cistern near75°
+                at14m/s. Either Stone/Water order works; wait and watch the
+                overflow.
+              </p>
+            </details>
+          </section>
+          <section
+            id="last-controls"
+            class="thermal-readout"
+            hidden
+            aria-label="Last Connection mixer and mechanism"
+          >
+            <div class="aim-buttons">
+              <label
+                >INGREDIENT A<select id="last-a">
+                  <option>Earth</option>
+                  <option>Spark</option>
+                  <option>Biomass</option>
+                </select></label
+              >
+              <label
+                >INGREDIENT B<select id="last-b">
+                  <option>Earth</option>
+                  <option>Spark</option>
+                  <option>Biomass</option>
+                </select></label
+              >
+              <button id="last-fire">Launch Stone</button>
+            </div>
+            <p id="last-stock"></p>
+            <p id="last-recipe"></p>
+            <label
+              >Aim <output id="last-angle-value">65°</output
+              ><input
+                id="last-angle"
+                type="range"
+                min="5"
+                max="85"
+                step="1"
+                value="65"
+            /></label>
+            <p id="last-state" role="status"></p>
+            <p id="last-status" role="status"></p>
+            <details>
+              <summary>Recipes and clues</summary>
+              <p>
+                Earth + Earth → Stone. Spark + Biomass → Fire. The generator is
+                already ON. A stone can obstruct the narrow feeder; heat travels
+                from the metal pad into the shielded water bridge. Without
+                current the magnet releases its weight, lifting the seed gate.
+                Try Stone near 65°, then Fire near 30° at 14 m/s. Selecting
+                ingredients spends nothing.
+              </p>
+            </details>
+          </section>
+          <section
+            id="circuit-controls"
+            class="thermal-readout"
+            hidden
+            aria-label="Broken Circuit mixer and live contacts"
+          >
+            <div class="aim-buttons">
+              <label
+                >INGREDIENT A<select id="mix-a">
+                  <option>Spark</option>
+                  <option>Drop</option>
+                  <option>Biomass</option>
+                  <option>Metal</option>
+                </select></label
+              >
+              <label
+                >INGREDIENT B<select id="mix-b">
+                  <option>Spark</option>
+                  <option>Drop</option>
+                  <option selected>Biomass</option>
+                  <option>Metal</option>
+                </select></label
+              >
+              <button id="circuit-fire">Launch Fire</button>
+            </div>
+            <p id="circuit-stock"></p>
+            <p id="circuit-recipe"></p>
+            <label
+              >Aim <output id="circuit-angle-value">30°</output
+              ><input
+                id="circuit-angle"
+                type="range"
+                min="5"
+                max="85"
+                step="1"
+                value="30"
+            /></label>
+            <p id="circuit-state" role="status"></p>
+            <meter id="circuit-charge" min="0" max="4" value="0"></meter>
+            <p id="circuit-status" role="status"></p>
+            <details>
+              <summary>Recipes and clues</summary>
+              <p>
+                Fire: Spark + Biomass. Water: Drop + Drop. Electric: Spark +
+                Metal. Thunder: Spark + Spark. Electric controls the generator
+                START port; Thunder only supplies a short pulse. The receiver
+                needs four continuous seconds through actual wet contacts.
+                Ingredients are spent only when fired. Other pairs are
+                unavailable.
+              </p>
+            </details>
+          </section>
+          <section
+            id="puzzle-controls"
+            class="thermal-readout"
+            hidden
+            aria-label="Seed puzzle"
+          >
+            <p id="puzzle-ammo"></p>
+            <div class="aim-buttons">
+              <button id="aim-heat">Aim heat · 50°</button
+              ><button id="aim-rope">Aim rope · 30°</button
+              ><button id="puzzle-fire">Launch Fire</button>
+            </div>
+            <p id="puzzle-status" role="status"></p>
+          </section>
+          <section
+            id="thermal-readout"
+            class="thermal-readout"
+            aria-label="Thermal relay live measurements"
+            hidden
+          >
+            <div id="water-controls" class="water-controls" hidden>
+              <label
+                >BEETLE
+                <select id="species">
+                  <option value="Water">Water · Drop + Drop</option>
+                  <option value="Fire">Fire · Spark + Biomass</option>
+                </select></label
+              >
+              <div class="aim-buttons">
+                <button id="aim-inlet">Aim inlet · 60°</button
+                ><button id="aim-pad">Aim metal · 50°</button>
+              </div>
+              <label id="timing-label"
+                >TIMING
+                <select id="timing-profile">
+                  <option value="current">Current · try 1–2 s</option>
+                  <option value="comparison">Candidate · try 3–5 s</option>
+                </select></label
+              >
+              <p id="water-volume" role="status">
+                Boiler empty · 0.00 / 1.00 V*
+              </p>
+              <p id="impact-timing">No metal impacts yet.</p>
+              <p id="surface-stats" hidden></p>
+            </div>
+            <div class="thermal-actions">
+              <p id="thermal-summary" role="status">
+                Warm metal. Transfer heat. Let pressure do the work.
+              </p>
+              <button id="thermal-fire">Add Fire</button>
+            </div>
+            <div class="thermal-gauges">
+              <label
+                >METAL <output id="metal-temp">0.00 T*</output
+                ><meter id="metal-meter" min="0" max="2.4" value="0"></meter
+              ></label>
+              <label
+                >WATER <output id="water-temp">0.00 / 0.80 T*</output
+                ><meter id="water-meter" min="0" max="0.8" value="0"></meter
+              ></label>
+              <label
+                >PRESSURE <output id="steam-pressure">0.000 P*</output
+                ><meter id="pressure-meter" min="0" max="0.5" value="0"></meter
+              ></label>
+              <label
+                >PISTON <output id="piston-distance">0.00 / 1.00 m</output
+                ><meter id="piston-meter" min="0" max="1" value="0"></meter
+              ></label>
+            </div>
+            <details>
+              <summary>Thermal contact experiments</summary>
+              <label
+                ><input id="bridge-gap" type="checkbox" /> Open a physical gap
+                in the bridge</label
+              ><label
+                ><input id="bridge-insulator" type="checkbox" /> Replace bridge
+                with insulating stone</label
+              >
+              <p id="energy-budget"></p>
+            </details>
+          </section>
+          <div class="transport">
+            <div class="button-group">
+              <button id="pause" aria-pressed="false">Pause</button
+              ><button
+                id="step"
+                title="Pause and advance one 1/120 second physics step"
+              >
+                Step +1</button
+              ><button id="reset">↺ Reset</button>
+            </div>
+            <label class="time-label"
+              >TIME
+              <select id="timescale">
+                <option value="1">1×</option>
+                <option value="0.25">¼×</option>
+                <option value="0.5">½×</option>
+              </select></label
+            >
+          </div>
+          <div class="overlays">
+            <label><input id="arc" type="checkbox" checked /> Aim guide</label
+            ><label><input id="debug" type="checkbox" /> Physics overlay</label
+            ><span>Tap scene to aim · Space to fire · R to reset</span>
+          </div>
+        </section>
+        <aside class="controls" aria-label="Cannon controls">
+          <div class="control-heading">
+            <span class="eyebrow">YOUR CANNON</span
+            ><span class="tiny-pill">FIXED POSITION</span>
+          </div>
+          <h2 id="cannon-heading">Make a little Fire.</h2>
+          <p class="control-description">
+            Two ingredients, one curious Beetle.
+          </p>
+          <div id="recipe" class="recipe">
+            <span><i class="spark">✦</i>Spark</span><b>+</b
+            ><span><i class="biomass">❧</i>Biomass</span><b>→</b
+            ><span><i class="fire-icon">♨</i>Fire</span>
+          </div>
+          <p class="recipe-note">
+            Candidate recipe · unlimited lab ingredients
+          </p>
+          <div class="slider-heading">
+            <label for="angle">Aim angle</label
+            ><output id="angle-value" for="angle">50°</output>
+          </div>
+          <input id="angle" type="range" min="5" max="85" value="50" step="1" />
+          <div class="range-ends">
+            <span>LOW ARC</span><span>HIGH ARC</span>
+          </div>
+          <div class="slider-heading">
+            <label for="speed">Launch speed</label
+            ><output id="speed-value" for="speed">14 m/s</output>
+          </div>
+          <input
+            id="speed"
+            type="range"
+            min="6"
+            max="18"
+            value="14"
+            step="0.5"
+          />
+          <details>
+            <summary>Experiment parameters</summary>
+            <div class="slider-heading">
+              <label for="heat">Heat per impact</label
+              ><output id="heat-value" for="heat">1.2</output>
+            </div>
+            <input
+              id="heat"
+              type="range"
+              min="0.3"
+              max="1.2"
+              value="1.2"
+              step="0.1"
+            />
+            <p id="parameter-note" class="parameter-note">
+              Rope burns at 1.0 heat. Heat cools over time. Gravity: 9.81 m/s².
+              Infinite lab ammo.
+            </p>
+          </details>
+          <button id="fire" class="fire-button">
+            <span id="launch-label">Launch Fire Beetle</span>
+            <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true">
+              <path
+                d="M5 19 19 5M5 5h14v14"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              />
+            </svg>
+          </button>
+          <p id="launch-status" class="launch-status" role="status">
+            Ready when you are.
+          </p>
+          <div class="observation">
+            <span class="eyebrow">OBSERVE THE CHAIN</span>
+            <ol>
+              <li id="rope-state">Rope intact</li>
+              <li id="cable-state">Cable restrained</li>
+              <li id="landing-state">Landing bay waiting</li>
+            </ol>
+          </div>
+        </aside>
+      </div>
+      <section class="notebook" aria-label="Experiment observations">
+        <div>
+          <p class="eyebrow">FIELD NOTES</p>
+          <h2>Try. Observe. Reset.</h2>
+          <p id="hint">
+            A rope can burn. The metal beside it cannot.<br />Try nearby angles
+            and compare what happens.
+          </p>
+        </div>
+        <div class="trace">
+          <div class="trace-heading">
+            <span>EVENT TRACE</span><span id="clock">0.00 s · 0 shots</span>
+          </div>
+          <ol id="events" aria-label="Recent physics events">
+            <li>No events yet. Launch your first Beetle.</li>
+          </ol>
+        </div>
+      </section>
+      <footer>
+        <span>P01–P10 · A small world of shared rules.</span>
+        <span
+          >Prototype units · simplified constraints, thermal reservoirs and
+          electrical contacts</span
+        >
+      </footer>
+    </main>
+    <script type="module" src="./app.mjs"></script>
+  </body>
+</html>

@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="da">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow,noarchive"><meta name="referrer" content="no-referrer">
+<meta name="color-scheme" content="light">
+<title>Elementlings · P10 prøvebane</title>
+<style>
+*{box-sizing:border-box}body{margin:0;background:#f2f2e8;font:16px system-ui,-apple-system,sans-serif;color:#203c32;min-height:100svh;display:grid;place-items:center;padding:22px}
+main{width:100%;max-width:410px;padding:30px;background:#fff;border:1px solid #dce0d2;border-radius:18px;box-shadow:0 6px 25px #203c3214}
+small{color:#6f796b;letter-spacing:.16em;font-size:11px;font-weight:700}h1{font-size:28px;margin:15px 0 8px}p{line-height:1.55;color:#58665a}
+label{display:block;font-weight:650;margin:25px 0 6px}input{width:100%;font-size:17px;border:1px solid #bdcabb;border-radius:9px;padding:12px}
+button{background:#335c48;border:0;border-radius:9px;padding:14px;color:white;font-size:17px;font-weight:bold;width:100%;margin-top:16px}
+#error{color:#a42424;font-size:14px;min-height:22px;margin:8px 0 0}.note{font-size:12px;color:#7b8179}
+</style></head>
+<body><main>
+<small>ELEMENTLINGS · MIDLERTIDIG PREVIEW</small>
+<h1>P10 – The Clay Bridge</h1>
+<p>Test den nye bane med Mud, Fire og Stone. Indtast testkoden for at fortsætte.</p>
+<form id="gate"><label for="access">Adgangskode</label><input id="access" autocomplete="off" autocapitalize="characters" spellcheck="false" autofocus required><button type="submit">Spil banen →</button><p id="error" role="status"></p></form>
+<p class="note">Kun til hurtig intern spiltest. Koden er en enkel adgangsbarriere og ikke krypteret adgangskontrol.</p>
+</main>
+<script>
+document.getElementById("gate").addEventListener("submit",function(e){
+ e.preventDefault();
+ if(document.getElementById("access").value.trim().toUpperCase()==="LERBRO10"){
+   location.replace("./play.html?preset=clay-bridge");
+ }else document.getElementById("error").textContent="Forkert kode – prøv igen.";
+});
+</script></body></html>
